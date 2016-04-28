@@ -12,11 +12,16 @@ if "%maven_commands%"=="" if "%specified_folders%"=="" (
 )
 
 
+
 if "%specified_folders%"=="" (
 	:: If no projects specified, apply command to all 1st level sub-directory
-	set projects=(*)
-) else (
-	set projects=(%specified_folders%)
+	set projects=*
+) 
+
+if not "%specified_folders%"=="" (
+	set projects=%specified_folders%
 )
 
-for /D %%G in %projects% do mvn -f %%G %maven_commands%
+echo %projects%
+
+for /D %%G in (%projects%) do mvn -f %%G %maven_commands%
